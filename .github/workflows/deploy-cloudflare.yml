@@ -116,11 +116,15 @@ jobs:
           fi
           
           if [ "$(printf '%s' "$CLOUDFLARE_EMAIL" | tr '[:upper:]' '[:lower:]')" = "true" ]; then
-            cat >> "$CONFIG_FILE" <<'EOF'
+            if grep -q '^\[\[send_email\]\]' "$CONFIG_FILE"; then
+              echo "::warning:: [[send_email]] already present in $CONFIG_FILE; skipping to avoid duplicate."
+            else
+              cat >> "$CONFIG_FILE" <<'EOF'
 
           [[send_email]]
           name = "email"
           EOF
+            fi
           fi
 
           sed -i "s|\${NAME}|${NAME}|g" "$CONFIG_FILE"
