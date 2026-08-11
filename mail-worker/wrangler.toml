@@ -20,7 +20,8 @@ enabled = true
 #bucket_name = ""		#r2对象存储桶的名字
 
 [[send_email]]
-name = "email"			#CF发件, 配置后优先使用
+name = "email"
+remote = true
 
 [ai]
 binding = "ai"
